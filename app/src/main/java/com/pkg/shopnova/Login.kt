@@ -9,7 +9,7 @@ import com.pkg.data.LoginRequest
 import com.pkg.retrofit.AppRetroClient
 import com.pkg.shopnova.databinding.LoginBinding
 import kotlinx.coroutines.launch
-
+//Login Activity for ecommerce app
 class Login : AppCompatActivity() {
     private lateinit var binding: LoginBinding
 
