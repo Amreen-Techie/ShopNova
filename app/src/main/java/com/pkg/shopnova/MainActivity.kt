@@ -1,6 +1,7 @@
 package com.pkg.shopnova
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,6 +26,7 @@ import com.pkg.data.GetSearchData
 import com.pkg.data.ProductInfo
 import com.pkg.data.Review
 import com.pkg.retrofit.AppRetroClient
+import com.pkg.retrofit.MyAppPreference
 import com.pkg.shopnova.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -35,6 +37,9 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    lateinit  var sharedPref: MyAppPreference
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         GetAllCarts()
         AddCartsPost()
         placeOrderMethod()
+        Logout()
     }
     private fun LoginMethod()
     {
@@ -60,6 +66,22 @@ class MainActivity : AppCompatActivity() {
 
             }
         }*/
+
+    }
+    private fun Logout()
+    {
+
+        binding.btnLogout.setOnClickListener {
+
+            sharedPref = MyAppPreference(this@MainActivity)
+            var info = sharedPref.getInfoToken()
+            if (!info.isNullOrEmpty()) {
+                // Clear saved login data
+                sharedPref.getSP_Clear()
+            }
+            // Prevent going back to MainActivity
+            finish()
+        }
 
     }
 
