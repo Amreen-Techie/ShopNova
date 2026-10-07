@@ -42,10 +42,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            try {
                 println("btnLogin  Clicked!")
                 lifecycleScope.launch {
-                    val username_login = binding.etUsername.text.toString().trim()
+                    try {
+
+                        val username_login = binding.etUsername.text.toString().trim()
                     val password_login = binding.etPassword.text.toString().trim()
                     println("username_login: $username_login")
                     println("password_login: $password_login")
@@ -54,62 +55,60 @@ class LoginActivity : AppCompatActivity() {
                     if (username_login.isEmpty() || password_login.isEmpty()) {
                         Toast.makeText(this@LoginActivity, "Please enter username and password", Toast.LENGTH_SHORT).show()
                     }
-                    //&& expiresInMins == "30"
                     else if (username_login == "emilys" && password_login == "emilyspass" ) {
+
+                        val login_request = LoginRequest(
+                            username_login,
+                            password_login
+                            ,expiresInMins = 30
+                        )
+                        println("CHECK 1: $login_request")
+
+                        val login_response = AppRetroClient.getLoginAPI.login(login_request)
+                        println("CHECK 2: $login_response")
+
+                        if (login_response.isSuccessful) {
+
+                            val data = login_response.body()
+
+                            if (data != null) {
+
+                                token = data.accessToken
+                                val firstName = data.firstName
+                                val username = data.username
+                                val email = data.email
+//Start
+
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Login successful: $firstName",
+                                    Toast.LENGTH_LONG
+                                ).show()
+//End
+                      /*          println("Access Token: $token")
+                                println("Username: $username")
+                                println("Email: $email")
+                                println("firstName: $firstName")
+                      */      }
+
+                        } else {
+                            println("Error btnLoginClicked: ${login_response.code()}")
+                        }
 
                         Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
 
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                       val intent = Intent(this@LoginActivity, MainActivity::class.java)
+
                         startActivity(intent)
+
                     }
                     else {
                         Toast.makeText(this@LoginActivity, "Invalid username or password", Toast.LENGTH_SHORT).show()
-                    }
-               /* val login_request = LoginRequest(
-                    username = "emilys",
-                    password = "emilyspass",
-                    expiresInMins = 30
-                )*/
-                    val login_request = LoginRequest(
-                        username_login,
-                        password_login
-                        ,expiresInMins = 30
-                    )
-                val login_response = AppRetroClient.getLoginAPI.login(login_request)
-
-                if (login_response.isSuccessful) {
-
-                    val data = login_response.body()
-
-                    if (data != null) {
-
-                        token = data.accessToken
-                        val firstName = data.firstName
-                        val username = data.username
-                        val email = data.email
-//Start
-
-                        /*Toast.makeText(
-                            this@LoginActivity,
-                            "Login successful: $firstName",
-                            Toast.LENGTH_LONG
-                        ).show()*/
-//End
-                        println("Access Token: $token")
-                        println("Username: $username")
-                        println("Email: $email")
-                        println("firstName: $firstName")
-
+                    }}
+                    catch (e: Exception) {
+                        println("Try Login Exception: ${e.message}")
                     }
 
-                } else {
-                    println("Error: ${login_response.code()}")
-                }
-
-            }
-
-            } catch (e: Exception) {
-                println("Exception: ${e.message}")
             }
         }
 

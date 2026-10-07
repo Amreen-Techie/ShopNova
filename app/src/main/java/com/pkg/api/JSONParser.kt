@@ -1,4 +1,4 @@
-package com.pkg
+package com.pkg.api
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

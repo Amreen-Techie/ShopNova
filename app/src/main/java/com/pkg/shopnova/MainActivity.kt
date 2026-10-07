@@ -10,29 +10,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
-import com.pkg.JSONParser
+import com.pkg.api.JSONParser
 import com.pkg.data.CartRequest
-import com.pkg.data.DataForProductDetails
 import com.pkg.data.GetCategoriesData
-import com.pkg.data.LoginRequest
-import com.pkg.data.Meta
 import com.pkg.data.OrderRequest
 import com.pkg.data.OrderResponse
-import com.pkg.data.Product
 import com.pkg.data.ProductAddCartRequest
-import com.pkg.data.ProductDimension
-import com.pkg.data.GetSearchData
 
-import com.pkg.data.ProductInfo
-import com.pkg.data.Review
 import com.pkg.retrofit.AppRetroClient
 import com.pkg.retrofit.MyAppPreference
 import com.pkg.shopnova.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
-import org.json.JSONArray
 import org.json.JSONObject
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,8 +36,9 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        println("CHECK 4: ")
 
-        LoginMethod()
+   //     LoginMethod()
         GetCategories()
         GetProductByCategories()
         SearchProduct()
@@ -85,37 +75,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun GetCategories()
-    {
+    private fun GetCategories() {
         binding.btnGetCategories.setOnClickListener {
+            try {
+                val intent = Intent(this@MainActivity, CategoryRVActivity::class.java)
+                startActivity(intent)
 
-            lifecycleScope.launch {
-
-                val response = AppRetroClient.getApiCategory.getCategories()
-                var getCategoryList : List<GetCategoriesData> = emptyList()
-                if (response.isSuccessful) {
-                    val jsonString = Gson().toJson(response.body())
-                    println("GetCategories  = ${jsonString}")
-
-                    var jsonParser = JSONParser()
-
-                    getCategoryList = jsonParser.parseGetCategories(jsonString.toString())
-
-                    println("getCategoryList  = ${getCategoryList}")
-
-                } else {
-
-                    println("Error: ${response.code()}")
-                }
-                getCategoryList.forEach { category ->
-                    println("name = ${category.name}")
-                    println(category.slug)
-                    println(category.url)
-                }
+            } catch (e: Exception) {
+                println("Error: ${e.message}")
             }
         }
-
-        }
+    }
     private fun  GetProductByCategories()
     {
         binding.btnGetProductByCategories.setOnClickListener {
