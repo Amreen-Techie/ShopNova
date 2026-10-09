@@ -21,7 +21,7 @@ interface ProductAPI {
     suspend fun searchProduct(
         @Query("q") query: String
     ): Response<GetSearchData>
-    @GET("products?limit=10&skip=10")
+    @GET("products?")
     suspend fun getAllProduct(): Response<GetSearchData>
 
 

@@ -1,6 +1,9 @@
 package com.pkg.shopnova
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,10 +22,22 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = LoginBinding.inflate(layoutInflater)
+        //binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        sharedPref = MyAppPreference(this@LoginActivity)
 
+        setSupportActionBar(binding.toolbar)
+
+        supportActionBar?.title = getString(R.string.app_name)
+
+
+
+        sharedPref = MyAppPreference(this@LoginActivity)
+        if (isInternetAvailable(this@LoginActivity)) {
+            Toast.makeText(this@LoginActivity, "Internet Available", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this@LoginActivity, "No Internet Connection", Toast.LENGTH_SHORT).show()
+        }
 
         var info = sharedPref.getInfoToken()
 
@@ -104,7 +119,11 @@ class LoginActivity : AppCompatActivity() {
                     }
                     else {
                         Toast.makeText(this@LoginActivity, "Invalid username or password", Toast.LENGTH_SHORT).show()
-                    }}
+                    }
+
+
+
+                    }
                     catch (e: Exception) {
                         println("Try Login Exception: ${e.message}")
                     }
@@ -114,7 +133,17 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
+    fun isInternetAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
+        val network = connectivityManager.activeNetwork ?: return false
+
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(network) ?: return false
+
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    }
     override fun onResume() {
         super.onResume()
         sharedPref = MyAppPreference(this@LoginActivity)
