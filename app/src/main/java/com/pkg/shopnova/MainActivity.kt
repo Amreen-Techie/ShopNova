@@ -5,14 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.pkg.api.JSONParser
 import com.pkg.data.CartRequest
-import com.pkg.data.GetCategoriesData
 import com.pkg.data.OrderRequest
 import com.pkg.data.OrderResponse
 import com.pkg.data.ProductAddCartRequest
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
    //     LoginMethod()
         GetCategories()
-        GetProductByCategories()
+      //  GetProductByCategories()
         SearchProduct()
         GetAllProducts()
         GetAllCarts()
@@ -93,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             {
                 lifecycleScope.launch {
                     binding.pb.visibility = View.VISIBLE
-                    val response = AppRetroClient.getApiProduct.getProductByCategories()
+                    val response = AppRetroClient.getApiProduct.getProductByCategories("smartphones")
 
                     if (response.isSuccessful) {
                         val jsonString = Gson().toJson(response.body())

@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.pkg.data.GetCategoriesData
 import com.pkg.data.GetSearchData
 import com.pkg.data.GetSearchProductDetails
 import com.pkg.shopnova.R
@@ -48,7 +46,7 @@ class ProductAdapter(
 
         holder.cl_Main.setOnClickListener { view ->
             Log.i("productTitleName", "Item is clicked $productTitleName")
-            productClickListener.onCategoryClicked(position, productTitleName.title)
+            //productClickListener.onCategoryClicked( productTitleName.title,position)
 
         }
 
@@ -73,5 +71,11 @@ class ProductAdapter(
 
         }
     }
-
+    fun updateProducts(newProducts: List<GetSearchData>) {
+        productData.clear()
+        productData.addAll(newProducts)
+        notifyDataSetChanged()
+    }
 }
+
+private fun MutableList<GetSearchProductDetails>.addAll(elements: List<GetSearchData>) {}

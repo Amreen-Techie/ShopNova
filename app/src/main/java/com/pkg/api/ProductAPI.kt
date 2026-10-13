@@ -5,6 +5,7 @@ import com.pkg.data.GetSearchData
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ProductAPI {
@@ -12,8 +13,13 @@ interface ProductAPI {
     @GET("products/categories")
     suspend fun getCategories(): Response<ResponseBody>
 
-    @GET("products/category/smartphones")
+   /* @GET("products/category/smartphones")
     suspend fun getProductByCategories(): Response<GetSearchData>
+*/
+    @GET("products/category/{category}")
+    suspend fun getProductByCategories(
+        @Path("category") category: String
+    ): Response<GetSearchData>
 
    /* @GET("products/search?q=tablet")
     suspend fun searchProduct(): Response<GetSearchData>*/

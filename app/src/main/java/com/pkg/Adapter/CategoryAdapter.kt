@@ -1,23 +1,30 @@
 package com.pkg.recycler_view
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.pkg.data.GetCategoriesData
+import com.pkg.data.ProductCategory
 import com.pkg.shopnova.R
 
 
-class CategoryAdapter(var categoryData: MutableList<GetCategoriesData>, var categoryClickListener : CategoryChildClickListener) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(var categoryData: MutableList<ProductCategory>,    private val activityContext: Context
+,                      var categoryClickListener : CategoryChildClickListener) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+
+    private lateinit var context: Context
+
+    init {
+        context = activityContext
+    }
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
+
     ): CategoryViewHolder {
         //TODO("Not yet implemented")
         var inflator = LayoutInflater.from((viewGroup.context))
@@ -39,9 +46,13 @@ class CategoryAdapter(var categoryData: MutableList<GetCategoriesData>, var cate
       //  holder.tvCategoryImage.setImageResource(categoryImage.get(position))
 
         holder.cl_Main.setOnClickListener { view->
-            Log.i("NewsAdapter", "Item is clicked $newsTitleName")
-            categoryClickListener.onCategoryClicked(position,newsTitleName.name)
-
+            Log.i("CategoryAdapter", "Item is clicked $newsTitleName")
+            categoryClickListener.onCategoryClicked(categoryData,position)
+            Toast.makeText(
+                context,
+                newsTitleName.name,
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
     }
@@ -54,6 +65,8 @@ class CategoryAdapter(var categoryData: MutableList<GetCategoriesData>, var cate
 
     class CategoryViewHolder(childView: View) : RecyclerView.ViewHolder(childView) {
         var tvCategoryTitle: TextView
+
+
       //  var tvCategorySubTitle: TextView
      //   var tvCategoryImage: ImageView
         var cl_Main : ConstraintLayout

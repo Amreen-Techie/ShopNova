@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.pkg.data.AddCartProductInfo
 import com.pkg.data.GetAllCartProductsInfo
-import com.pkg.data.GetCategoriesData
+import com.pkg.data.ProductCategory
 import com.pkg.data.GetSearchData
 
 class JSONParser {
@@ -43,11 +43,11 @@ class JSONParser {
 // var gson = Gson()
     // var getCategoriesData = gson.fromJson<GetCategoriesData>(json, GetCategoriesData::class.java)
 
-    fun parseGetCategories(json: String) : List<GetCategoriesData>
+    fun parseGetCategories(json: String) : List<ProductCategory>
     {
-        val categoryList: List<GetCategoriesData> = Gson().fromJson(
+        val categoryList: List<ProductCategory> = Gson().fromJson(
             json,
-            object : TypeToken<List<GetCategoriesData>>() {}.type
+            object : TypeToken<List<ProductCategory>>() {}.type
         )
         return categoryList
     }
