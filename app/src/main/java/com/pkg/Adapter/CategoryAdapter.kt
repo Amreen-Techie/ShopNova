@@ -37,22 +37,22 @@ class CategoryAdapter(var categoryData: MutableList<ProductCategory>,    private
         position: Int) {
         //TODO("Not yet implemented")
 
-        var newsTitleName = categoryData.get(position)
+        var category = categoryData.get(position)
         var categoryImage = categoryData.get(position)
 
-        holder.tvCategoryTitle.text = newsTitleName.name
+        holder.tvCategoryTitle.text = category.name
        // holder.tvCategorySubTitle.text = categoryImage.slug
 
       //  holder.tvCategoryImage.setImageResource(categoryImage.get(position))
 
         holder.cl_Main.setOnClickListener { view->
-            Log.i("CategoryAdapter", "Item is clicked $newsTitleName")
-            categoryClickListener.onCategoryClicked(categoryData,position)
-            Toast.makeText(
-                context,
-                newsTitleName.name,
-                Toast.LENGTH_SHORT
-            ).show()
+            Log.i("CategoryAdapter", "Item is clicked $category")
+            categoryClickListener.onCategoryClicked(category,position)
+//            Toast.makeText(
+//                context,
+//                newsTitleName.name,
+//                Toast.LENGTH_SHORT
+//            ).show()
         }
 
     }

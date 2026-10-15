@@ -26,20 +26,56 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import kotlin.collections.forEach
 
-class CategoryRVActivity : AppCompatActivity() , CategoryChildClickListener {
+class CategoryRVActivity : AppCompatActivity()  {
 
     lateinit var rvCategory: RecyclerView
     lateinit var rvProduct: RecyclerView
 
     lateinit var categoryAdapter: CategoryAdapter
     lateinit var productAdapter: ProductAdapter
-    lateinit var categoryClickListener : CategoryChildClickListener
+    //lateinit var categoryClickListener : CategoryChildClickListener
 
     private var getCategoryList = mutableListOf<ProductCategory>()
     private var productCategoryList: MutableList<GetSearchProductDetails> = mutableListOf<GetSearchProductDetails>()
 
     private var getProductListByCategory = mutableListOf<GetSearchProductDetails>()
     private lateinit var binding: ActivityCategoryRvBinding
+
+    private val categoryClickListener = object : CategoryChildClickListener {
+
+        override fun onCategoryClicked(
+            data: ProductCategory,
+            position: Int
+        ) {
+            // Receive clicked category here
+
+            Log.i("CategoryRVActivity", "Item is clicked $position")
+//            Toast.makeText(
+//                this@CategoryRVActivity,
+//                getCategoryList.get(position).toString(),
+//                Toast.LENGTH_SHORT
+//            ).show()
+
+            val selectedCategory = getCategoryList.get(position).slug
+            // Load products for selected category
+            if (position!=0)
+            {
+
+                println("Adapter Enters in if getProductByCategory: $selectedCategory")
+
+                getProductByCategory(selectedCategory)
+
+            }
+            else{
+
+                println("Adapter Enters in else getCategoryData: $selectedCategory")
+                getAllProductDetails()
+
+                // getCategoryData()
+
+            }
+        }
+    }
 
    // private val productCategoryList = mutableListOf<GetSearchData>()
 
@@ -103,43 +139,7 @@ class CategoryRVActivity : AppCompatActivity() , CategoryChildClickListener {
 
 
                     categoryAdapter = CategoryAdapter(
-                        getCategoryList,this@CategoryRVActivity,
-                        object : CategoryChildClickListener {
-
-                            override fun onCategoryClicked(
-                                data: MutableList<ProductCategory>,
-                                position: Int
-                            ) {
-                                // Receive clicked category here
-
-                                Log.i("CategoryRVActivity", "Item is clicked $position")
-                                Toast.makeText(
-                                    this@CategoryRVActivity,
-                                    getCategoryList.get(position).toString(),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                                val selectedCategory = getCategoryList.get(position).name
-                                // Load products for selected category
-                                if (position!=0)
-                                {
-
-                                    println("Adapter Enters in if getProductByCategory: $selectedCategory")
-
-                                    getProductByCategory(selectedCategory)
-
-                                }
-                                else{
-
-                                    println("Adapter Enters in else getCategoryData: $selectedCategory")
-                                    getAllProductDetails()
-
-                                   // getCategoryData()
-
-                                }
-                            }
-                        }
-                    )
+                        getCategoryList,this@CategoryRVActivity,categoryClickListener)
 
                     rvCategory.layoutManager = LinearLayoutManager(this@CategoryRVActivity,LinearLayoutManager.HORIZONTAL,false)
                     rvCategory.adapter = categoryAdapter
@@ -205,7 +205,7 @@ class CategoryRVActivity : AppCompatActivity() , CategoryChildClickListener {
 
                         println("getProductListByCategory  = ${getProductListByCategory}")
 
-                        productAdapter = ProductAdapter(getProductListByCategory as MutableList<GetSearchProductDetails>,this@CategoryRVActivity)
+                        productAdapter = ProductAdapter(getProductListByCategory as MutableList<GetSearchProductDetails>,categoryClickListener)
 
                         rvProduct.layoutManager = LinearLayoutManager(this@CategoryRVActivity,LinearLayoutManager.VERTICAL,false)
 
@@ -254,7 +254,7 @@ class CategoryRVActivity : AppCompatActivity() , CategoryChildClickListener {
 
                     println("productCategoryList  = ${productCategoryList}")
 
-                    productAdapter = ProductAdapter(productCategoryList as MutableList<GetSearchProductDetails>,this@CategoryRVActivity)
+                    productAdapter = ProductAdapter(productCategoryList as MutableList<GetSearchProductDetails>,categoryClickListener)
 
                     rvProduct.layoutManager = LinearLayoutManager(this@CategoryRVActivity,LinearLayoutManager.VERTICAL,false)
 
@@ -277,25 +277,4 @@ class CategoryRVActivity : AppCompatActivity() , CategoryChildClickListener {
         Log.i("CategoryRVActivity", "onNewsClicked called..Item is $name position is $position")
     }*/
 
-
-    override fun onCategoryClicked(data: MutableList<ProductCategory>, position: Int) {
-        TODO("Not yet implemented")
-       // productAdapter.updateProducts(filteredProducts)
-        Log.i("ClassActivity onCategoryClicked", "Item is clicked $position")
-      /*  if (position!=0)
-        {
-
-            println("ActivityClass Enters in if getProductByCategory: $position")
-
-            getProductByCategory(data.get(position).name)
-
-        }
-        else{
-
-            println("ActivityClass Enters in else getCategoryData: $position")
-
-            getCategoryData()
-
-        }*/
-    }
 }

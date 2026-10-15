@@ -45,7 +45,7 @@ class CategoryAdapterNew(var categoryList: MutableList<ProductCategory>, var cat
         //if (position == 0) {
             holder.cl_Main.setOnClickListener { view ->
                 Log.i("CategoryAdapter", "CategoryAdapter Item is clicked $newsTitleName")
-                categoryClickListener.onCategoryClicked(categoryList,position )
+                categoryClickListener.onCategoryClicked(newsTitleName,position )
                 holder.tvCategoryTitle.text = newsTitleName.name
             }
 

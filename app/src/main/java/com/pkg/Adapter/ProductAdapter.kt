@@ -1,5 +1,7 @@
 package com.pkg.recycler_view
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,20 +13,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pkg.data.GetSearchData
 import com.pkg.data.GetSearchProductDetails
+import com.pkg.holder.ProductDataHolder
+import com.pkg.shopnova.MainActivity
+import com.pkg.shopnova.ProductDetailsActivity
 import com.pkg.shopnova.R
 
 
-class ProductAdapter(
-    var productData: MutableList<GetSearchProductDetails>,
-    var productClickListener: CategoryChildClickListener
+class ProductAdapter(var productData: MutableList<GetSearchProductDetails>,
+                     var productClickListener: CategoryChildClickListener
 ) : RecyclerView.Adapter<ProductAdapter.CategoryViewHolder>() {
+
+    private lateinit var contextV : Context
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
+
     ): CategoryViewHolder {
         //TODO("Not yet implemented")
         var inflator = LayoutInflater.from((viewGroup.context))
         var childView = inflator.inflate(R.layout.child_product, null)
+         contextV = viewGroup.context // Get context directly from parent
 
         return CategoryViewHolder(childView)
     }
@@ -34,19 +42,22 @@ class ProductAdapter(
         position: Int
     ) {
         //TODO("Not yet implemented")
+        var product = productData.get(position)
+        //var productImage = productData.get(position)
 
-        var productTitleName = productData.get(position)
-        var productImage = productData.get(position)
-
-        holder.tvProductTitle.setText(productTitleName.title)
+        holder.tvProductTitle.setText(product.title)
         Glide.with(holder.itemView.context)
-            .load(productImage.thumbnail)
+            .load(product.thumbnail)
             .into(holder.tvProductImage)
         //  holder.tvCategoryImage.setImageResource(categoryImage.get(position))
 
         holder.cl_Main.setOnClickListener { view ->
-            Log.i("productTitleName", "Item is clicked $productTitleName")
+            Log.i("productTitleName", "product Item is clicked $product")
             //productClickListener.onCategoryClicked( productTitleName.title,position)
+        //Product details page visible when product item is clicked.
+            val intent = Intent(contextV, ProductDetailsActivity::class.java)
+            ProductDataHolder.ProductDataHolder.productDetailsList = productData
+            contextV.startActivity(intent)
 
         }
 
