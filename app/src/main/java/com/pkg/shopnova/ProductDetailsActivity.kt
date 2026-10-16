@@ -8,7 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.pkg.Adapter.ProductImageAdapter
 import com.pkg.data.Dimensions
 import com.pkg.data.GetSearchProductDetails
 import com.pkg.data.Review
@@ -36,7 +39,13 @@ class ProductDetailsActivity : AppCompatActivity() {
 
 
     lateinit var tvReturnPolicy: TextView
+
     lateinit var tvMinimumOrderQuantity: TextView
+    lateinit var tvMetaList: TextView
+    lateinit var tvImages: ImageView
+    lateinit var rvProductImages: RecyclerView
+
+
 
     private var quantity = 1
 
@@ -80,6 +89,10 @@ class ProductDetailsActivity : AppCompatActivity() {
         tvReviewsList = findViewById<TextView>(R.id.tvReviewsList)
         tvReturnPolicy = findViewById<TextView>(R.id.tvReturnPolicy)
         tvMinimumOrderQuantity = findViewById<TextView>(R.id.tvMinimumOrderQuantity)
+
+        tvMetaList =  findViewById<TextView>(R.id.tvMetaList)
+        //tvImages = findViewById<ImageView>(R.id.tvImages)
+        rvProductImages = findViewById<RecyclerView>(R.id.rvProductImages)
         tvQuantity = findViewById<TextView>(R.id.tvQuantity)
 
         btnDecrease = findViewById<Button>(R.id.btnDecrease)
@@ -137,14 +150,8 @@ class ProductDetailsActivity : AppCompatActivity() {
             tvWarrantyInformation.text = product.warrantyInformation
             tvShippingInformation.text = product.shippingInformation
             tvAvailabilityStatus.text = product.availabilityStatus
+
             val reviewsList = product.reviews
-
-            // val reviewsList: Review = product.reviews.get(position)
-            Log.i(
-                "reviewsList== $reviewsList",
-                "product.reviews.get(position) = ${product.reviews}"
-            )
-
             tvReviewsList.text = reviewsList.joinToString("\n\n") { review ->
                 """
                     Rating: ${review.rating}/5
@@ -156,6 +163,46 @@ class ProductDetailsActivity : AppCompatActivity() {
 
             tvReturnPolicy.text = product.returnPolicy
             tvMinimumOrderQuantity.text = product.minimumOrderQuantity
+
+            //tvMetaList
+            val metaList = product.meta
+
+
+            tvMetaList.text = """
+                Created At: ${metaList.createdAt}
+                
+                Updated At: ${metaList.updatedAt}
+                
+                Barcode: ${metaList.barcode}
+                
+                QR Code: ${metaList.qrCode}
+                """.trimIndent()
+
+            val imagesList: List<String> = product.images
+
+           // tvImages.text = tags.joinToString(", ")
+
+
+
+            Log.i(
+                "product.images== ${imagesList}","IMAGES "
+            )
+
+
+            val images = product.images
+
+            rvProductImages.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+            rvProductImages.adapter = ProductImageAdapter(images)
+
+            //Load Images
+
+//            Glide.with(tvImages.context)
+//                .load(product.images)
+//                .into(tvImages)
+
+
         }
 
     }
