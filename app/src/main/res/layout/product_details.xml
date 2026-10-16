@@ -193,6 +193,7 @@
                 android:text="Stock"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
+                android:textStyle="bold"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +205,6 @@
                 android:layout_height="wrap_content"
                 android:text="Stock Value"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lblStock" />
@@ -216,6 +216,7 @@
                 android:text="Tags"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
+                android:textStyle="bold"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -507,7 +508,6 @@
                 android:text="Images Value"
                 android:textSize="20sp"
 
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lblImages" />
@@ -575,9 +575,18 @@
         android:id="@+id/btnAddToCart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
         android:text="Add to Cart"
-        app:layout_constraintTop_toBottomOf="@id/btnDecrease"
+        app:layout_constraintTop_toBottomOf="@id/tvQuantity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+    <Button
+        android:id="@+id/btnPlaceOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:text="Place Order"
+        app:layout_constraintTop_toBottomOf="@id/btnAddToCart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

@@ -57,6 +57,7 @@ class ProductAdapter(var productData: MutableList<GetSearchProductDetails>,
         //Product details page visible when product item is clicked.
             val intent = Intent(contextV, ProductDetailsActivity::class.java)
             ProductDataHolder.ProductDataHolder.productDetailsList = productData
+            intent.putExtra("Position",position)
             contextV.startActivity(intent)
 
         }
@@ -82,11 +83,11 @@ class ProductAdapter(var productData: MutableList<GetSearchProductDetails>,
 
         }
     }
-    fun updateProducts(newProducts: List<GetSearchData>) {
+  /*  fun updateProducts(newProducts: List<GetSearchData>) {
         productData.clear()
         productData.addAll(newProducts)
         notifyDataSetChanged()
-    }
+    }*/
 }
 
 private fun MutableList<GetSearchProductDetails>.addAll(elements: List<GetSearchData>) {}
