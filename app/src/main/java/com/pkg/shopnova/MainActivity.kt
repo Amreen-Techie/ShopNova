@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit  var sharedPref: MyAppPreference
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,11 +37,11 @@ class MainActivity : AppCompatActivity() {
    //     LoginMethod()
         GetCategories()
       //  GetProductByCategories()
-        SearchProduct()
-        GetAllProducts()
-        GetAllCarts()
-        AddCartsPost()
-        placeOrderMethod()
+     //   SearchProduct()
+     //   GetAllProducts()
+    //    GetAllCarts()
+   //     AddCartsPost()
+    //    placeOrderMethod()
         Logout()
     }
     private fun LoginMethod()

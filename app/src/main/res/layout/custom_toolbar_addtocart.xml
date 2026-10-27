@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="#FFFFFF"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <ImageView
+        android:id="@+id/toolbarLogo"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:src="@drawable/addtocart"
+        android:scaleType="fitCenter"
+        android:contentDescription="Shop logo" />
+
+</androidx.appcompat.widget.Toolbar>

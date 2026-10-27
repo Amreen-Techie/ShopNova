@@ -8,6 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -15,8 +16,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/white" >
 
+    <ImageView
+        android:id="@+id/imageCart"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_cart"
+
+        android:scaleType="fitCenter"
+        android:contentDescription="Toolbar image" />
+
+</androidx.appcompat.widget.Toolbar>
     <ProgressBar android:id="@+id/pb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
