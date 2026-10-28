@@ -15,11 +15,11 @@ class JSONParser {
         var gson = Gson()
         var addToCartResponse = gson.fromJson<AddCartProductInfo>(json, AddCartProductInfo::class.java)
 
-     /*   val productList = addToCartResponse.products
+       val productList = addToCartResponse.productList
 
         println("Product count: ${productList?.size}")
 
-        productList?.forEach { product ->
+       /* productList?.forEach { product ->
             println("ID: ${product.productId}")
             println("Title: ${product.title}")
         }*/

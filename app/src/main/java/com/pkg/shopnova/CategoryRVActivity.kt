@@ -1,5 +1,6 @@
 package com.pkg.shopnova
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -44,46 +45,7 @@ class CategoryRVActivity : AppCompatActivity()  {
     private lateinit var binding: ActivityCategoryRvBinding
     lateinit var imageCart: ImageView
 
-    private val categoryClickListener = object : CategoryChildClickListener {
 
-        override fun onCategoryClicked(
-            data: ProductCategory,
-            position: Int
-        ) {
-            // Receive clicked category here
-
-            Log.i("CategoryRVActivity", "Item is clicked $position")
-//            Toast.makeText(
-//                this@CategoryRVActivity,
-//                getCategoryList.get(position).toString(),
-//                Toast.LENGTH_SHORT
-//            ).show()
-
-            val selectedCategory = getCategoryList.get(position).slug
-            // Load products for selected category
-            if (position!=0)
-            {
-
-                println("Adapter Enters in if getProductByCategory: $selectedCategory")
-
-                getProductByCategory(selectedCategory)
-
-            }
-            else{
-
-                println("Adapter Enters in else getCategoryData: $selectedCategory")
-                getAllProductDetails()
-
-                // getCategoryData()
-
-            }
-
-            val toolbar = findViewById<Toolbar>(R.id.toolbar)
-            setSupportActionBar(toolbar)
-
-            supportActionBar?.setDisplayShowTitleEnabled(false)
-        }
-    }
 
    // private val productCategoryList = mutableListOf<GetSearchData>()
 
@@ -94,8 +56,18 @@ class CategoryRVActivity : AppCompatActivity()  {
 
         binding = ActivityCategoryRvBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_category_rv)
+        setContentView(binding.root)
 
+        binding.imageCart.setOnClickListener {
+            try {
+             //   android.util.Log.d("CART_DEBUG", "Cart image clicked")
+
+              /*  val intent = Intent(this@CategoryRVActivity, CartActivity::class.java)
+                startActivity(intent)*/
+
+            } catch (e: Exception){
+
+        }}
         rvCategory = findViewById<RecyclerView>(R.id.rv_category)
 
         rvProduct = findViewById<RecyclerView>(R.id.rv_Product)
@@ -124,9 +96,44 @@ class CategoryRVActivity : AppCompatActivity()  {
 
    //     getProductByCategories("smartphones")
 
-
-
     }
+    private val categoryClickListener = object : CategoryChildClickListener {
+
+        override fun onCategoryClicked(
+            data: ProductCategory,
+            position: Int
+        ) {
+            // Receive clicked category here
+
+            Log.i("CategoryRVActivity", "Item is clicked $position")
+
+
+            val selectedCategory = getCategoryList.get(position).slug
+            // Load products for selected category
+            if (position!=0)
+            {
+
+                println("Adapter Enters in if getProductByCategory: $selectedCategory")
+
+                getProductByCategory(selectedCategory)
+
+            }
+            else{
+
+                println("Adapter Enters in else getCategoryData: $selectedCategory")
+                getAllProductDetails()
+
+                // getCategoryData()
+
+            }
+
+            val toolbar = findViewById<Toolbar>(R.id.toolbar)
+            setSupportActionBar(toolbar)
+
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+        }
+    }
+
 
     fun getCategoryData()
     {
@@ -147,7 +154,7 @@ class CategoryRVActivity : AppCompatActivity()  {
 
 
                     categoryAdapter = CategoryAdapter(
-                        getCategoryList,this@CategoryRVActivity,categoryClickListener)
+                        getCategoryList,this@CategoryRVActivity,categoryClickListener,binding.toolbar)
 
                     rvCategory.layoutManager = LinearLayoutManager(this@CategoryRVActivity,LinearLayoutManager.HORIZONTAL,false)
                     rvCategory.adapter = categoryAdapter

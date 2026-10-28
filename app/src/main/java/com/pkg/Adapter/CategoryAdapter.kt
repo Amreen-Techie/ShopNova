@@ -13,8 +13,12 @@ import com.pkg.data.ProductCategory
 import com.pkg.shopnova.R
 
 
-class CategoryAdapter(var categoryData: MutableList<ProductCategory>,    private val activityContext: Context
-,                      var categoryClickListener : CategoryChildClickListener) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(
+
+    var categoryData: MutableList<ProductCategory>, private val activityContext: Context
+    , var categoryClickListener: CategoryChildClickListener,
+    var toolbarn: androidx.appcompat.widget.Toolbar
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     private lateinit var context: Context
 
@@ -42,17 +46,18 @@ class CategoryAdapter(var categoryData: MutableList<ProductCategory>,    private
 
         holder.tvCategoryTitle.text = category.name
        // holder.tvCategorySubTitle.text = categoryImage.slug
+        toolbarn.title = "Shop Nova Test"
 
       //  holder.tvCategoryImage.setImageResource(categoryImage.get(position))
 
         holder.cl_Main.setOnClickListener { view->
             Log.i("CategoryAdapter", "Item is clicked $category")
             categoryClickListener.onCategoryClicked(category,position)
-//            Toast.makeText(
-//                context,
-//                newsTitleName.name,
-//                Toast.LENGTH_SHORT
-//            ).show()
+            Toast.makeText(
+                context,
+                "Test",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
     }
@@ -61,8 +66,6 @@ class CategoryAdapter(var categoryData: MutableList<ProductCategory>,    private
         //TODO("Not yet implemented")
         return categoryData.size
     }
-
-
     class CategoryViewHolder(childView: View) : RecyclerView.ViewHolder(childView) {
         var tvCategoryTitle: TextView
 
@@ -76,7 +79,6 @@ class CategoryAdapter(var categoryData: MutableList<ProductCategory>,    private
           //  tvCategorySubTitle =  childView.findViewById<TextView>(R.id.tv_item_subtitle)
 
             cl_Main = childView.findViewById<ConstraintLayout>(R.id.main)
-
 /*            val imageUrln = "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp\n"
             val imageUrl: String = imageUrln
             Glide.with(this)

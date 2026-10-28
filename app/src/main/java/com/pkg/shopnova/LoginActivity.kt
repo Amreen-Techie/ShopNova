@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
             println("ONCREATE My sp Token info is: $info")
             binding.etUsername.setText("emilys")
             binding.etPassword.setText("emilyspass")
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            val intent = Intent(this@LoginActivity, CategoryRVActivity::class.java)
             startActivity(intent)
         }
         else
@@ -112,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
 
                         Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
 
-                       val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                       val intent = Intent(this@LoginActivity, CategoryRVActivity::class.java)
 
                         startActivity(intent)
 
@@ -155,7 +155,7 @@ class LoginActivity : AppCompatActivity() {
             println("ONRESUME My sp Token info is: $info")
             binding.etUsername.setText("emilys")
             binding.etPassword.setText("emilyspass")
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            val intent = Intent(this@LoginActivity, CategoryRVActivity::class.java)
             startActivity(intent)
         }
         else

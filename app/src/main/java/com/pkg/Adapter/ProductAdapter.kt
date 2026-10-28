@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.pkg.data.GetSearchData
 import com.pkg.data.GetSearchProductDetails
 import com.pkg.holder.ProductDataHolder
-import com.pkg.shopnova.MainActivity
 import com.pkg.shopnova.ProductDetailsActivity
 import com.pkg.shopnova.R
 
