@@ -29,9 +29,12 @@ class JSONParser {
     fun parseGetAllCartsResponse(json: String) : GetAllCartProductsInfo
     {
         var gson = Gson()
-        var getAllCartsResponse = gson.fromJson<GetAllCartProductsInfo>(json, GetAllCartProductsInfo::class.java)
-
-        return getAllCartsResponse
+       // var getAllCartsResponse = gson.fromJson<GetAllCartProductsInfo>(json, GetAllCartProductsInfo::class.java)
+        val response = Gson().fromJson(
+            json,
+            GetAllCartProductsInfo::class.java
+        )
+        return response
     }
     fun parseSearchProducts(json: String) : GetSearchData
     {

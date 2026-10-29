@@ -62,8 +62,8 @@ class CategoryRVActivity : AppCompatActivity()  {
             try {
              //   android.util.Log.d("CART_DEBUG", "Cart image clicked")
 
-              /*  val intent = Intent(this@CategoryRVActivity, CartActivity::class.java)
-                startActivity(intent)*/
+               val intent = Intent(this@CategoryRVActivity, CartActivity::class.java)
+                startActivity(intent)
 
             } catch (e: Exception){
 

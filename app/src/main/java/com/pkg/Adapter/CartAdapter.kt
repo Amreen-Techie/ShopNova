@@ -70,7 +70,7 @@ class CartAdapter(
      //   var tvCategoryImage: ImageView
         var cl_Main : ConstraintLayout
         init {
-            tvCategoryTitle = childView.findViewById<TextView>(R.id.tv_item_title)
+            tvCategoryTitle = childView.findViewById<TextView>(R.id.tv_titleCart)
           //  tvCategoryImage = childView.findViewById<ImageView>(R.id.imageCategory)
           //  tvCategorySubTitle =  childView.findViewById<TextView>(R.id.tv_item_subtitle)
 

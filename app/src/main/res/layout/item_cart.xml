@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_margin="6dp"
+    android:background="#F2F4F7">
+
+    <TextView
+        android:id="@+id/tvCartId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cart ID: 1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="6dp" />
+
+    <TextView
+        android:id="@+id/tvUserId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User ID: 1"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvProductCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Products: 4 | Quantity: 12"
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCartProducts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+
+        />
+
+    <TextView
+        android:id="@+id/tvCartTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total: 13037.88"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="end"
+        android:paddingTop="8dp" />
+
+    <TextView
+        android:id="@+id/tvCartDiscountedTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Discounted Total: 11510.81"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="end"
+        android:paddingTop="4dp" />
+
+</LinearLayout>

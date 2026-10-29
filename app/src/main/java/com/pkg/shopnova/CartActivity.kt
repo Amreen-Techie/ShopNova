@@ -1,5 +1,6 @@
 package com.pkg.shopnova
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.pkg.Adapter.CartAdapterNew
 import com.pkg.api.JSONParser
 import com.pkg.data.CartsInfo
 import com.pkg.data.GetAllProductInfo
@@ -17,24 +19,30 @@ import com.pkg.recycler_view.CartAdapter
 import com.pkg.recycler_view.CartChildClickListener
 import com.pkg.recycler_view.CategoryChildClickListener
 import com.pkg.retrofit.AppRetroClient
-import com.pkg.shopnova.databinding.ActivityCartRvBinding
+import com.pkg.shopnova.databinding.ActivityCartBinding
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class CartActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCartRvBinding
+    private lateinit var binding: ActivityCartBinding
   //  private var cartList = MutableList<GetAllProductInfo>()
     private var cartList: MutableList<CartsInfo> = mutableListOf()
-    lateinit var cartAdapter: CartAdapter
+    lateinit var cartAdapter: CartAdapterNew
 
     lateinit var rvCart: RecyclerView
+
+    private lateinit var rvCarts: RecyclerView
+   // private lateinit var cartAdapterNew: CartAdapterNew
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCartRvBinding.inflate(layoutInflater)
+        binding = ActivityCartBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
+        rvCart = findViewById<RecyclerView>(R.id.rv_cart)
+
         //setContentView(R.layout.activity_cart_rv)
         GetAllCarts()
 
@@ -56,18 +64,25 @@ class CartActivity : AppCompatActivity() {
                         println("jsonString = ${jsonString}")
 
                         var jsonParser = JSONParser()
-                        //var jsonObj = JSONObject(jsonString)
-                       // var getAllCartResponse = jsonParser.parseGetAllCartsResponse(jsonString)
+                        var jsonObj = JSONObject(jsonString)
+                        var getAllCartResponse = jsonParser.parseGetAllCartsResponse(jsonString)
+                        println("getAllCartResponse = ${getAllCartResponse}")
 
-                      //  println("getAllCartResponse = ${getAllCartResponse.carts.toString()}")
 
-                        cartList = jsonParser.parseGetAllCartsResponse(jsonString) as MutableList<CartsInfo>
 
-                        cartAdapter = CartAdapter(
-                            cartList,this@CartActivity,cartClickListener)
+                      /*  val getAllCartResponse =
+                            jsonParser.parseGetAllCartsResponse(jsonString)*/
 
-                        rvCart.layoutManager = LinearLayoutManager(this@CartActivity,LinearLayoutManager.HORIZONTAL,false)
+                        cartList = getAllCartResponse.carts.toMutableList()
+                       // cartList = jsonParser.parseGetAllCartsResponse(jsonString) as MutableList<CartsInfo>
+
+                   //     carts: List<CartsInfo>
+                        cartAdapter = CartAdapterNew(
+                            cartList)
+
+                        rvCart.layoutManager = LinearLayoutManager(this@CartActivity,LinearLayoutManager.VERTICAL,false)
                         rvCart.adapter = cartAdapter
+
 
                     } else {
                         println("Error: ${response.code()}")
@@ -83,6 +98,7 @@ class CartActivity : AppCompatActivity() {
     }
     private val cartClickListener = object : CartChildClickListener {
 
+        @SuppressLint("SuspiciousIndentation")
         fun onCategoryClicked(
             data: ProductCategory,
             position: Int
