@@ -44,6 +44,7 @@ class CategoryRVActivity : AppCompatActivity()  {
     private var getProductListByCategory = mutableListOf<GetSearchProductDetails>()
     private lateinit var binding: ActivityCategoryRvBinding
     lateinit var imageCart: ImageView
+    lateinit var imageSearch: ImageView
 
 
 
@@ -60,14 +61,29 @@ class CategoryRVActivity : AppCompatActivity()  {
 
         binding.imageCart.setOnClickListener {
             try {
-             //   android.util.Log.d("CART_DEBUG", "Cart image clicked")
 
                val intent = Intent(this@CategoryRVActivity, CartActivity::class.java)
                 startActivity(intent)
 
             } catch (e: Exception){
+                println("Error imageCart: ${e.message}")
 
         }}
+
+        binding.imageSearch.setOnClickListener {
+            try {
+
+                android.util.Log.d("Search_DEBUG", "Search image clicked")
+
+                val intent = Intent(this@CategoryRVActivity, SearchActivity::class.java)
+                startActivity(intent)
+
+            } catch (e: Exception){
+                println("Error imageSearch: ${e.message}")
+
+            }
+
+        }
         rvCategory = findViewById<RecyclerView>(R.id.rv_category)
 
         rvProduct = findViewById<RecyclerView>(R.id.rv_Product)

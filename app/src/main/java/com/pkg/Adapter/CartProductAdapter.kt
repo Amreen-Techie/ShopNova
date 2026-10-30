@@ -12,7 +12,7 @@ import com.pkg.shopnova.R
 import java.util.Locale
 
 class CartProductAdapter(
-    private val products: List<GetAllProductInfo>
+    private val products: MutableList<GetAllProductInfo>
 ) : RecyclerView.Adapter<CartProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(itemView: View) :

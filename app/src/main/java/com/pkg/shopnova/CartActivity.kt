@@ -10,14 +10,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.pkg.Adapter.CartAdapterNew
+import com.pkg.Adapter.CartAdapter
 import com.pkg.api.JSONParser
 import com.pkg.data.CartsInfo
 import com.pkg.data.GetAllProductInfo
 import com.pkg.data.ProductCategory
-import com.pkg.recycler_view.CartAdapter
 import com.pkg.recycler_view.CartChildClickListener
-import com.pkg.recycler_view.CategoryChildClickListener
 import com.pkg.retrofit.AppRetroClient
 import com.pkg.shopnova.databinding.ActivityCartBinding
 import kotlinx.coroutines.launch
@@ -27,7 +25,7 @@ class CartActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCartBinding
   //  private var cartList = MutableList<GetAllProductInfo>()
     private var cartList: MutableList<CartsInfo> = mutableListOf()
-    lateinit var cartAdapter: CartAdapterNew
+    lateinit var cartAdapter: CartAdapter
 
     lateinit var rvCart: RecyclerView
 
@@ -69,15 +67,11 @@ class CartActivity : AppCompatActivity() {
                         println("getAllCartResponse = ${getAllCartResponse}")
 
 
-
-                      /*  val getAllCartResponse =
-                            jsonParser.parseGetAllCartsResponse(jsonString)*/
-
                         cartList = getAllCartResponse.carts.toMutableList()
                        // cartList = jsonParser.parseGetAllCartsResponse(jsonString) as MutableList<CartsInfo>
 
                    //     carts: List<CartsInfo>
-                        cartAdapter = CartAdapterNew(
+                        cartAdapter = CartAdapter(
                             cartList)
 
                         rvCart.layoutManager = LinearLayoutManager(this@CartActivity,LinearLayoutManager.VERTICAL,false)
@@ -125,7 +119,6 @@ class CartActivity : AppCompatActivity() {
         }
 
         override fun onCartClicked(cartInfo: GetAllProductInfo, position: Int) {
-            TODO("Not yet implemented")
         }
     }
 }

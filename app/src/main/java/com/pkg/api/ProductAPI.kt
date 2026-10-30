@@ -21,12 +21,20 @@ interface ProductAPI {
         @Path("category") category: String
     ): Response<GetSearchData>
 
-   /* @GET("products/search?q=tablet")
+    /*@GET("products/search?q=tablet")
     suspend fun searchProduct(): Response<GetSearchData>*/
+
     @GET("products/search")
     suspend fun searchProduct(
-        @Query("q") query: String
+        @Query("q") searchText: String
     ): Response<GetSearchData>
+
+
+/*    @GET("products/search")
+    suspend fun searchProduct(
+        @Query("q") query: String
+    ): Response<GetSearchData>*/
+
     @GET("products?")
     suspend fun getAllProduct(): Response<GetSearchData>
 

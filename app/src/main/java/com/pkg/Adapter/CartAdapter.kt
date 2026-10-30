@@ -1,86 +1,84 @@
-package com.pkg.recycler_view
+package com.pkg.Adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pkg.data.CartsInfo
-import com.pkg.data.GetAllProductInfo
 import com.pkg.shopnova.R
-
+import java.util.Locale
 
 class CartAdapter(
-    var cartList: MutableList<CartsInfo>, private val activityContext: Context
-    , var cartClickListener: CartChildClickListener
+    private val carts: List<CartsInfo>
+) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
-) : RecyclerView.Adapter<CartAdapter.CategoryViewHolder>() {
+    class CartViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
 
-    private lateinit var context: Context
+        val tvCartId: TextView =
+            itemView.findViewById(R.id.tvCartId)
 
-    init {
-        context = activityContext
+        val tvUserId: TextView =
+            itemView.findViewById(R.id.tvUserId)
+
+        val tvProductCount: TextView =
+            itemView.findViewById(R.id.tvProductCount)
+
+        val rvCartProducts: RecyclerView =
+            itemView.findViewById(R.id.rvCartProducts)
+
+        val tvCartTotal: TextView =
+            itemView.findViewById(R.id.tvCartTotal)
+
+        val tvCartDiscountedTotal: TextView =
+            itemView.findViewById(R.id.tvCartDiscountedTotal)
     }
+
     override fun onCreateViewHolder(
-        viewGroup: ViewGroup,
+        parent: ViewGroup,
         viewType: Int
+    ): CartViewHolder {
 
-    ): CategoryViewHolder {
-        //TODO("Not yet implemented")
-        var inflator = LayoutInflater.from((viewGroup.context))
-        var childView = inflator.inflate(R.layout.child_cart, null)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_cart, parent, false)
 
-        return CategoryViewHolder(childView)
+        return CartViewHolder(view)
     }
 
-    override fun onBindViewHolder( holder: CategoryViewHolder,
-        position: Int) {
-        //TODO("Not yet implemented")
+    override fun onBindViewHolder(
+        holder: CartViewHolder,
+        position: Int
+    ) {
+        val cart = carts[position]
 
-        var cartId = cartList.get(position)
-        var categoryImage = cartList.get(position)
+        holder.tvCartId.text = "Cart ID: ${cart.id}"
+        holder.tvUserId.text = "User ID: ${cart.userId}"
 
-        holder.tvCategoryTitle.text = cartId.id.toString()
+        holder.tvProductCount.text =
+            "Products: ${cart.totalProducts} | Quantity: ${cart.totalQuantity}"
 
-      //  holder.tvCategoryImage.setImageResource(categoryImage.get(position))
+        holder.tvCartTotal.text = String.format(
+            Locale.US,
+            "Total: %.2f",
+            cart.total
+        )
 
-        holder.cl_Main.setOnClickListener { view->
-            Log.i("CartAdapter", "Item is clicked $cartId")
-            //cartClickListener.onCartClicked(cartId,position)
-            Toast.makeText(
-                context,
-                "Test Cart",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        holder.tvCartDiscountedTotal.text = String.format(
+            Locale.US,
+            "Discounted Total: %.2f",
+            cart.discountedTotal
+        )
 
+        holder.rvCartProducts.layoutManager =
+            LinearLayoutManager(holder.itemView.context)
+
+        holder.rvCartProducts.isNestedScrollingEnabled = false
+
+        holder.rvCartProducts.adapter =
+            CartProductAdapter(cart.products)
     }
 
-    override fun getItemCount(): Int {
-        //TODO("Not yet implemented")
-        return cartList.size
-    }
-    class CategoryViewHolder(childView: View) : RecyclerView.ViewHolder(childView) {
-        var tvCategoryTitle: TextView
-      //  var tvCategorySubTitle: TextView
-     //   var tvCategoryImage: ImageView
-        var cl_Main : ConstraintLayout
-        init {
-            tvCategoryTitle = childView.findViewById<TextView>(R.id.tv_titleCart)
-          //  tvCategoryImage = childView.findViewById<ImageView>(R.id.imageCategory)
-          //  tvCategorySubTitle =  childView.findViewById<TextView>(R.id.tv_item_subtitle)
-
-            cl_Main = childView.findViewById<ConstraintLayout>(R.id.main)
-/*            val imageUrln = "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp\n"
-            val imageUrl: String = imageUrln
-            Glide.with(this)
-                .load(imageUrl)
-                .into(tvCategoryImage)
-        */}
-    }
-
+    override fun getItemCount(): Int = carts.size
 }

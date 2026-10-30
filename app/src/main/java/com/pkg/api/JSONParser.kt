@@ -43,8 +43,6 @@ class JSONParser {
 
         return getSearchResponse
     }
-// var gson = Gson()
-    // var getCategoriesData = gson.fromJson<GetCategoriesData>(json, GetCategoriesData::class.java)
 
     fun parseGetCategories(json: String) : List<ProductCategory>
     {
@@ -54,11 +52,5 @@ class JSONParser {
         )
         return categoryList
     }
-   /* fun parseSearchProducts(json: String) : GetAllCartProductsInfo
-    {
-        var gson = Gson()
-        var getAllCartsResponse = gson.fromJson<GetAllCartProductsInfo>(json, GetAllCartProductsInfo::class.java)
 
-        return getAllCartsResponse
-    }*/
 }

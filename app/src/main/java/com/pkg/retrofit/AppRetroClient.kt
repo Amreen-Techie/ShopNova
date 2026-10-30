@@ -22,6 +22,8 @@ object AppRetroClient {
     val getApiProduct : ProductAPI = retrofitCart.create(ProductAPI::class.java)
     val getApiCart: CartAPI = retrofitCart.create(CartAPI::class.java)
 
+  //  val getApiSearch: CartAPI = retrofitCart.create(CartAPI::class.java)
+
 
 }
 
