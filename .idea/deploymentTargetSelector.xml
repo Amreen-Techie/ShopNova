@@ -15,10 +15,10 @@
       </SelectionState>
       <SelectionState runConfigName="ShopNova">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-09-11T07:47:07.790373Z">
+        <DropdownSelection timestamp="2026-10-30T11:37:51.961632900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=6LXC5DGQXG8XAY8H" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=32340068" />
             </handle>
           </Target>
         </DropdownSelection>

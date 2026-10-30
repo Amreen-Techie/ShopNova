@@ -99,8 +99,12 @@ private fun GetAllSearchs(keySearch : String) {
                     }
                     else
                     {
-                      //  Toast.makeText(this, "No product found!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SearchActivity, "No product found!", Toast.LENGTH_SHORT).show()
+                        searchAdapter = SearchAdapter(emptyList())
+                        binding.rvSearch.layoutManager =
+                            LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
 
+                        binding.rvSearch.adapter = searchAdapter
                     }
 
 
