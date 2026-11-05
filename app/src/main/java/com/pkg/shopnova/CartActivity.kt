@@ -20,13 +20,18 @@ import com.pkg.retrofit.AppRetroClient
 import com.pkg.shopnova.databinding.ActivityCartBinding
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+/**
+ * Activity responsible for managing and displaying the user's shopping cart items
+ * using a vertical RecyclerView and fetching cart data asynchronously via Retrofit.
+ */
 
 class CartActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCartBinding
-  //  private var cartList = MutableList<GetAllProductInfo>()
+    // Mutable list holding cart information entries.
     private var cartList: MutableList<CartsInfo> = mutableListOf()
     lateinit var cartAdapter: CartAdapter
 
+    // RecyclerView for displaying list of carts.
     lateinit var rvCart: RecyclerView
 
     private lateinit var rvCarts: RecyclerView
@@ -36,15 +41,24 @@ class CartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inflate layout using View Binding.
         binding = ActivityCartBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        // Initialize cart RecyclerView reference.
         rvCart = findViewById<RecyclerView>(R.id.rv_cart)
 
-        //setContentView(R.layout.activity_cart_rv)
+        // Fetch all user carts when the activity is created[cite: 2]
         GetAllCarts()
 
     }
+
+    /**
+     * Fetches all shopping carts from the backend API using coroutines
+     * and binds the data to the cart RecyclerView adapter.
+     */
+
     private fun GetAllCarts()
     {
 
@@ -52,8 +66,10 @@ class CartActivity : AppCompatActivity() {
             {
 
                 lifecycleScope.launch {
-
+                    // Show progress bar indicator.
                     binding.pb.visibility = View.VISIBLE
+
+                    // Make API network call to get all carts.
                     val response = AppRetroClient.getApiCart.getAllCarts()
 
                     if (response.isSuccessful) {
@@ -63,14 +79,15 @@ class CartActivity : AppCompatActivity() {
 
                         var jsonParser = JSONParser()
                         var jsonObj = JSONObject(jsonString)
+
+                        // Parse JSON response into structured cart objects.
                         var getAllCartResponse = jsonParser.parseGetAllCartsResponse(jsonString)
                         println("getAllCartResponse = ${getAllCartResponse}")
 
 
                         cartList = getAllCartResponse.carts.toMutableList()
-                       // cartList = jsonParser.parseGetAllCartsResponse(jsonString) as MutableList<CartsInfo>
 
-                   //     carts: List<CartsInfo>
+                        // Initialize adapter and configure vertical LinearLayoutManager.
                         cartAdapter = CartAdapter(
                             cartList)
 
@@ -81,6 +98,7 @@ class CartActivity : AppCompatActivity() {
                     } else {
                         println("Error: ${response.code()}")
                     }
+                    // Hide progress bar indicator.
                     binding.pb.visibility = View.GONE
                 }
 
@@ -90,6 +108,10 @@ class CartActivity : AppCompatActivity() {
                 println("Error: ${e.message}")
             }
     }
+
+    /**
+     * Click listener interface implementation for handling interactions with cart items.
+     */
     private val cartClickListener = object : CartChildClickListener {
 
         @SuppressLint("SuspiciousIndentation")
@@ -103,15 +125,12 @@ class CartActivity : AppCompatActivity() {
 
 
             val selectedCartId = cartList.get(position).id
-            // Load products for selected category
-           /* if (position!=0)
-            {*/
 
                 println("Adapter Enters in if selectedCartId: $selectedCartId")
-                GetAllCarts()
 
+            // Reload cart data on click action.
 
-
+            GetAllCarts()
             val toolbar = findViewById<Toolbar>(R.id.toolbar)
             setSupportActionBar(toolbar)
 
@@ -119,6 +138,8 @@ class CartActivity : AppCompatActivity() {
         }
 
         override fun onCartClicked(cartInfo: GetAllProductInfo, position: Int) {
+            // Handle individual cart item selection event.
+
         }
     }
 }

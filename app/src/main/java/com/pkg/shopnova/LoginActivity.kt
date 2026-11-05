@@ -15,10 +15,33 @@ import com.pkg.shopnova.databinding.LoginBinding
 import kotlinx.coroutines.launch
 
 //Login Activity for ecommerce app
+
+/**
+
+Handles the login screen of ShopNova Application
+  **Responsbilities**
+* Set up the login and toolbar.
+* Check Network Connectivity
+* Validate the entered credentials and call the login API
+* Navigate to the product category screen after login.
+* Read and save the login token using Shared Preferences.
+*/
+
+
 class LoginActivity : AppCompatActivity() {
+    // View Binding gave type safe access to the views in the login layout.
     private lateinit var binding: LoginBinding
+   //Helper class is used to read and write the login token in Shared prefencecs.
     lateinit  var sharedPref: MyAppPreference
+    // Hold the access token returned by the login API.
     var token : String = ""
+
+    /**
+     * Called when the activity is created.
+     *
+     * Initialize the layout, toolbar,preferences & login button listeners
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = LoginBinding.inflate(layoutInflater)
@@ -133,6 +156,14 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
+    /**
+     *  Check wheather the active network has Internet Capability.
+     *
+     * @param context Context is used to access the connectivity service.
+     *
+     * returns true if an active netowork reports Internet Capability otherwise false.
+     *
+     */
     fun isInternetAvailable(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -144,11 +175,18 @@ class LoginActivity : AppCompatActivity() {
 
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
+
+    /**
+     * Called whenever the activity return to foreground.
+     *
+     * Re-checks the saved token & redirect to the category screen when one exists.
+     */
+
     override fun onResume() {
         super.onResume()
         sharedPref = MyAppPreference(this@LoginActivity)
 
-
+    // Check whether login token was saved while the Activity was paused.
         var info = sharedPref.getInfoToken()
 
         if (!info.isNullOrEmpty()){
@@ -166,15 +204,26 @@ class LoginActivity : AppCompatActivity() {
             binding.etPassword.setText("")
         }
     }
+
+    /**
+     * Called when the Activity is no longer visible.
+     * Saves the current token through the preference helper.
+     *
+     */
     override fun onStop() {
         super.onStop()
         //Fetch data
+        //Copy the current access token & save it persistently.
         var info = token
 
         // Save Data
         sharedPref.saveInfoToken(info)
     }
 
+    /**
+     * Called before the Activity is destroyed.
+     * The superclass implementation perform the standard cleanup.
+     */
     override fun onDestroy() {
 
         super.onDestroy()

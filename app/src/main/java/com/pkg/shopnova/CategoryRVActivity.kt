@@ -28,6 +28,10 @@ import com.pkg.shopnova.databinding.ActivityCategoryRvBinding
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import kotlin.collections.forEach
+/**
+ * Activity responsible for displaying product categories and their corresponding products
+ * in a RecyclerView grid/list layout, with top bar navigation for cart and search actions.
+ */
 
 class CategoryRVActivity : AppCompatActivity()  {
 
@@ -53,11 +57,16 @@ class CategoryRVActivity : AppCompatActivity()  {
     private var allProducts: List<GetSearchData> = emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Enable edge-to-edge display for modern Android window layouts
         enableEdgeToEdge()
 
         binding = ActivityCategoryRvBinding.inflate(layoutInflater)
 
+        // Inflate layout using View Binding
         setContentView(binding.root)
+
+        // Set click listener for the shopping cart icon to navigate to CartActivity.
 
         binding.imageCart.setOnClickListener {
             try {
@@ -69,6 +78,8 @@ class CategoryRVActivity : AppCompatActivity()  {
                 println("Error imageCart: ${e.message}")
 
         }}
+
+        //Set click listener for the Search icon to navigate to SearchActivity.
 
         binding.imageSearch.setOnClickListener {
             try {
@@ -88,6 +99,8 @@ class CategoryRVActivity : AppCompatActivity()  {
 
         rvProduct = findViewById<RecyclerView>(R.id.rv_Product)
 
+        // Handle window system insets to prevent UI overlap with status/navigation bars
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { view, windowInsets ->
 
             val insets = windowInsets.getInsets(
@@ -104,15 +117,19 @@ class CategoryRVActivity : AppCompatActivity()  {
             windowInsets
         }
 
-// Get the category details
+        // Fetch initial category data from the API
         getCategoryData()
 
-// Get the product details
+        // Fetch all product details to populate the initial grid
         getAllProductDetails()
 
-   //     getProductByCategories("smartphones")
 
     }
+
+    /**
+     * Listener callback handling item clicks on the category horizontal RecyclerView.
+     */
+
     private val categoryClickListener = object : CategoryChildClickListener {
 
         override fun onCategoryClicked(
@@ -125,7 +142,10 @@ class CategoryRVActivity : AppCompatActivity()  {
 
 
             val selectedCategory = getCategoryList.get(position).slug
-            // Load products for selected category
+
+            // If position is not 0, fetch products specific to the selected category slug;
+            // otherwise, load all products when "All" category is selected.
+
             if (position!=0)
             {
 
@@ -150,6 +170,10 @@ class CategoryRVActivity : AppCompatActivity()  {
         }
     }
 
+    /**
+     * Fetches the list of product categories from the backend server via Retrofit
+     * and sets up the horizontal category RecyclerView.
+     */
 
     fun getCategoryData()
     {
@@ -164,11 +188,11 @@ class CategoryRVActivity : AppCompatActivity()  {
                     val jsonString = Gson().toJson(response.body())
 
                     var jsonParser = JSONParser()
+
+                    // Parse category list from JSON response
                     getCategoryList = jsonParser.parseGetCategories(jsonString.toString()) as MutableList<ProductCategory>
 
-
-
-
+                    // Initialize adapter and assign horizontal layout manager
                     categoryAdapter = CategoryAdapter(
                         getCategoryList,this@CategoryRVActivity,categoryClickListener,binding.toolbar)
 
@@ -176,14 +200,14 @@ class CategoryRVActivity : AppCompatActivity()  {
                     rvCategory.adapter = categoryAdapter
 
 
-                    // Create a new item
+                    // Create an "All" option item to reset filters
                     val newItem = ProductCategory(
                         slug = "new-category",
                         name = " All ",
                         url = "https://example.com"
                     )
 
-// Add at position 0
+                    // Insert "All" category at index 0
                     getCategoryList.add(0, newItem)
 
 // Notify RecyclerView
@@ -196,6 +220,7 @@ class CategoryRVActivity : AppCompatActivity()  {
 
                     println("Error: ${response.code()}")
                 }
+                /** Log loaded categories for debugging purposes
                 getCategoryList.forEach { category ->
 
 
@@ -203,7 +228,7 @@ class CategoryRVActivity : AppCompatActivity()  {
                     println(category.slug)
                     println(category.url)
                 }
-
+*/
 
             }
 
@@ -212,11 +237,17 @@ class CategoryRVActivity : AppCompatActivity()  {
         }
     }
 
+    /**
+     * Fetches products filtered by a specific category slug and updates the product grid.
+     */
+
     private fun  getProductByCategory(categoryName : String)
     {
             try
             {
                 lifecycleScope.launch {
+
+                    // Show loading progress bar
                     binding.pb.visibility = View.VISIBLE
                     val response = AppRetroClient.getApiProduct.getProductByCategories(categoryName)
 
@@ -236,6 +267,7 @@ class CategoryRVActivity : AppCompatActivity()  {
 
                         println("getProductListByCategory  = ${getProductListByCategory}")
 
+                        // Setup product adapter with a 2-column grid layout manager
                         productAdapter = ProductAdapter(getProductListByCategory as MutableList<GetSearchProductDetails>,categoryClickListener)
 
                         rvProduct.layoutManager = LinearLayoutManager(this@CategoryRVActivity,LinearLayoutManager.VERTICAL,false)
@@ -257,7 +289,9 @@ class CategoryRVActivity : AppCompatActivity()  {
             }
 
     }
-
+    /**
+     * Fetches all available products from the server and displays them in a 2-column grid.
+     */
     fun getAllProductDetails()
     {
         try
