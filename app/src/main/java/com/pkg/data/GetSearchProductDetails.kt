@@ -1,11 +1,8 @@
 package com.pkg.data
 
-import android.os.Parcel
-import android.os.Parcelable
-//import kotlinx.parcelize.Parcelize
-
-
-//@Parcelize
+/**
+ * Data class containing comprehensive details for a product returned from search[cite: 18].
+ */
 data class GetSearchProductDetails(
 
     val id: String,

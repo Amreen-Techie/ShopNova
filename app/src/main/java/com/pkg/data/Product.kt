@@ -1,5 +1,7 @@
 package com.pkg.data
-
+/**
+ * Data class representing general product details.
+ */
 data class Product(
 
    val id: String,

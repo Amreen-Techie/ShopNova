@@ -1,5 +1,7 @@
 package com.pkg.data
-
+/**
+ * Data class representing the response received upon successful user authentication.
+ */
 data class LoginResponse(
 
     val token: String,
