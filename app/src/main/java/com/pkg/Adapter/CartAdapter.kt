@@ -9,11 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pkg.data.CartsInfo
 import com.pkg.shopnova.R
 import java.util.Locale
-
+/**
+ * RecyclerView Adapter for displaying a list of user carts,
+ * including cart summaries and nested lists of products within each cart.
+ */
 class CartAdapter(
     private val carts: List<CartsInfo>
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
-
+    /**
+     * ViewHolder class holding references to cart item UI views.
+     */
     class CartViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
@@ -40,7 +45,7 @@ class CartAdapter(
         parent: ViewGroup,
         viewType: Int
     ): CartViewHolder {
-
+// Inflate the cart item layout
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_cart, parent, false)
 
@@ -52,7 +57,7 @@ class CartAdapter(
         position: Int
     ) {
         val cart = carts[position]
-
+// Bind cart metadata to views
         holder.tvCartId.text = "Cart ID: ${cart.id}"
         holder.tvUserId.text = "User ID: ${cart.userId}"
 
@@ -70,7 +75,7 @@ class CartAdapter(
             "Discounted Total: %.2f",
             cart.discountedTotal
         )
-
+// Setup nested RecyclerView adapter for products inside the cart
         holder.rvCartProducts.layoutManager =
             LinearLayoutManager(holder.itemView.context)
 

@@ -17,7 +17,9 @@ import com.pkg.holder.ProductDataHolder
 import com.pkg.shopnova.ProductDetailsActivity
 import com.pkg.shopnova.R
 
-
+/**
+ * RecyclerView Adapter for displaying lists of products.
+ */
 class ProductAdapter(var productData: MutableList<GetSearchProductDetails>,
                      var productClickListener: CategoryChildClickListener
 ) : RecyclerView.Adapter<ProductAdapter.CategoryViewHolder>() {
@@ -42,17 +44,15 @@ class ProductAdapter(var productData: MutableList<GetSearchProductDetails>,
     ) {
         //TODO("Not yet implemented")
         var product = productData.get(position)
-        //var productImage = productData.get(position)
 
+// Bind product data to views
         holder.tvProductTitle.setText(product.title)
         Glide.with(holder.itemView.context)
             .load(product.thumbnail)
             .into(holder.tvProductImage)
-        //  holder.tvCategoryImage.setImageResource(categoryImage.get(position))
 
+// Navigate to ProductDetailsActivity upon clicking a product item
         holder.cl_Main.setOnClickListener { view ->
-            Log.i("productTitleName", "product Item is clicked $product")
-            //productClickListener.onCategoryClicked( productTitleName.title,position)
         //Product details page visible when product item is clicked.
             val intent = Intent(contextV, ProductDetailsActivity::class.java)
             ProductDataHolder.ProductDataHolder.productDetailsList = productData
@@ -68,7 +68,9 @@ class ProductAdapter(var productData: MutableList<GetSearchProductDetails>,
         return productData.size
     }
 
-
+    /**
+     * ViewHolder class for product list items.
+     */
     class CategoryViewHolder(childView: View) : RecyclerView.ViewHolder(childView) {
         var tvProductTitle: TextView
 
@@ -82,11 +84,7 @@ class ProductAdapter(var productData: MutableList<GetSearchProductDetails>,
 
         }
     }
-  /*  fun updateProducts(newProducts: List<GetSearchData>) {
-        productData.clear()
-        productData.addAll(newProducts)
-        notifyDataSetChanged()
-    }*/
+
 }
 
 private fun MutableList<GetSearchProductDetails>.addAll(elements: List<GetSearchData>) {}

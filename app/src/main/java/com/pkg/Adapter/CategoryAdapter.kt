@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pkg.data.ProductCategory
 import com.pkg.shopnova.R
 
-
+/**
+ * RecyclerView Adapter for displaying product categories.
+ */
 class CategoryAdapter(
 
     var categoryData: MutableList<ProductCategory>, private val activityContext: Context
@@ -48,8 +50,7 @@ class CategoryAdapter(
        // holder.tvCategorySubTitle.text = categoryImage.slug
         toolbarn.title = "Shop Nova Test"
 
-      //  holder.tvCategoryImage.setImageResource(categoryImage.get(position))
-
+// Handle click events on category items
         holder.cl_Main.setOnClickListener { view->
             Log.i("CategoryAdapter", "Item is clicked $category")
             categoryClickListener.onCategoryClicked(category,position)
@@ -66,25 +67,17 @@ class CategoryAdapter(
         //TODO("Not yet implemented")
         return categoryData.size
     }
+    /**
+     * ViewHolder class for category list items.
+     */
     class CategoryViewHolder(childView: View) : RecyclerView.ViewHolder(childView) {
         var tvCategoryTitle: TextView
-
-
-      //  var tvCategorySubTitle: TextView
-     //   var tvCategoryImage: ImageView
         var cl_Main : ConstraintLayout
         init {
             tvCategoryTitle = childView.findViewById<TextView>(R.id.tv_item_title)
-          //  tvCategoryImage = childView.findViewById<ImageView>(R.id.imageCategory)
-          //  tvCategorySubTitle =  childView.findViewById<TextView>(R.id.tv_item_subtitle)
 
             cl_Main = childView.findViewById<ConstraintLayout>(R.id.main)
-/*            val imageUrln = "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp\n"
-            val imageUrl: String = imageUrln
-            Glide.with(this)
-                .load(imageUrl)
-                .into(tvCategoryImage)
-        */}
+}
     }
 
 }

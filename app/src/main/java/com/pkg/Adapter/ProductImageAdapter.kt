@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pkg.shopnova.databinding.ItemProductImageBinding
-
+/**
+ * RecyclerView Adapter for displaying horizontal product image galleries (e.g., in product details).
+ */
 class ProductImageAdapter(
     private val images: List<String>
 ) : RecyclerView.Adapter<ProductImageAdapter.ImageViewHolder>() {
-
+    /**
+     * ViewHolder using ViewBinding for individual product image items.
+     */
     class ImageViewHolder(val binding: ItemProductImageBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -29,6 +33,7 @@ class ProductImageAdapter(
         holder: ImageViewHolder,
         position: Int
     ) {
+        // Load product image URL using Glide with a gallery placeholder
         Glide.with(holder.itemView.context)
             .load(images[position])
             .placeholder(android.R.drawable.ic_menu_gallery)

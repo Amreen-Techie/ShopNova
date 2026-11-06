@@ -10,11 +10,15 @@ import com.bumptech.glide.Glide
 import com.pkg.data.GetAllProductInfo
 import com.pkg.shopnova.R
 import java.util.Locale
-
+/**
+ * RecyclerView Adapter for displaying individual products contained within a cart.
+ */
 class CartProductAdapter(
     private val products: MutableList<GetAllProductInfo>
 ) : RecyclerView.Adapter<CartProductAdapter.ProductViewHolder>() {
-
+    /**
+     * ViewHolder class for cart product list items.
+     */
     class ProductViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
@@ -53,7 +57,7 @@ class CartProductAdapter(
         position: Int
     ) {
         val product = products[position]
-
+// Bind product details to UI views
         holder.tvTitle.text = product.title
 
         holder.tvPrice.text =
@@ -75,7 +79,7 @@ class CartProductAdapter(
                 "Final price: %.2f",
                 product.discountedTotal
             )
-
+// Load product thumbnail image using Glide with placeholders
         Glide.with(holder.itemView.context)
             .load(product.thumbnail)
             .placeholder(R.drawable.ic_cart)

@@ -9,11 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pkg.data.GetSearchProductDetails
 import com.pkg.shopnova.R
 import java.util.Locale
-
+/**
+ * RecyclerView Adapter for displaying search results and matching product summaries.
+ */
 class SearchAdapter(
     private val products: List<GetSearchProductDetails>
 ) : RecyclerView.Adapter<SearchAdapter.CartViewHolder>() {
-
+    /**
+     * ViewHolder for search result items.
+     */
     class CartViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
@@ -49,7 +53,7 @@ class SearchAdapter(
         position: Int
     ) {
         val product = products[position]
-
+// Bind search result details to respective TextViews
         holder.tvTitle.text = "Title: ${product.title}"
         holder.tvDescription.text = "Description: ${product.description}"
         holder.tvCategory.text = "Category: ${product.category}"
