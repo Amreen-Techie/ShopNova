@@ -33,6 +33,10 @@ import kotlin.text.get
 import kotlin.toString
 import retrofit2.Callback
 
+/**
+ * ProductDetailsActivity displays detailed information about a selected product,
+ * manages quality adjustments and handles adding items to cart or placing an order.
+ */
 
 class ProductDetailsActivity : AppCompatActivity() {
     private lateinit var productList: ArrayList<GetSearchProductDetails>
@@ -81,12 +85,10 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         setContentView(R.layout.product_details)
 
+        // Retrive the selected product postion from the Intent.
         position = intent.getIntExtra("Position", 0)
-        /*Toast.makeText(
-            this,
-            "Position $position ",
-            Toast.LENGTH_SHORT
-        ).show()*/
+
+        //Initialize UI components for product details views.
         tvProductTitle = findViewById<TextView>(R.id.tvProductTitle)
         imgThumbnail = findViewById<ImageView>(R.id.imgThumbnail)
         tvDescription = findViewById<TextView>(R.id.tvDescription)
@@ -119,42 +121,36 @@ class ProductDetailsActivity : AppCompatActivity() {
         btnIncrease = findViewById<Button>(R.id.btnIncrease)
         btnAddToCart = findViewById<Button>(R.id.btnAddToCart)
         btnPlaceOrder = findViewById<Button>(R.id.btnPlaceOrder)
+
+
+        // Setup quantity controllers and cart/order action listeners
         setupQuantityAndCart()
 
-
+        // Fetch product list details from memory holder
         productList =
             ProductDataHolder.ProductDataHolder.productDetailsList as ArrayList<GetSearchProductDetails>
-        // Access product details
+
+        //Populate views if product data is available.
+
         if (productList.isNotEmpty()) {
             val product = productList[position]
 
             tvProductTitle.text = product.title
-            //  tvProductPrice.text = product.price
 
-            //Load Product Image
+            // Load Product Thumbnail Image via Glide
             Glide.with(imgThumbnail.context)
                 .load(product.thumbnail)
                 .into(imgThumbnail)
 
             tvDescription.text = product.description
             tvCategory.text = product.category
-
             tvPrice.text = "₹ ${product.price} "
             tvDiscountPercentage.text = "${product.discountPercentage} %"
-
             tvRating.text = product.rating
             tvStock.text = product.stock
 
             val tags: List<String> = product.tags
             tvTags.text = tags.joinToString(", ")
-
-            // tvTags.id
-            // Log.i("tvTags.id $product.tags.get(1)", "TAGS = $product.tags")
-            /* Toast.makeText(
-                 this,
-                 "TAGS=== $product.tags.get(1)  ",
-                 Toast.LENGTH_SHORT
-             ).show()*/
             tvBrand.text = product.brand
             tvSku.text = product.sku
             tvWeight.text = product.weight
@@ -162,8 +158,6 @@ class ProductDetailsActivity : AppCompatActivity() {
             val dimensionList: Dimensions = product.dimensions
             Log.i("dimensionList== $dimensionList", "dimensionList = ${product.dimensions}")
 
-
-            //tvDimensionList.text = dimensionList.joinToString(",")
             tvDimensionList.text =
                 "Width: ${dimensionList.width} mm, Height: ${dimensionList.height} mm, Depth: ${dimensionList.depth} mm"
 
@@ -184,7 +178,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             tvReturnPolicy.text = product.returnPolicy
             tvMinimumOrderQuantity.text = product.minimumOrderQuantity
 
-            //tvMetaList
+            // Bind Meta Information
             val metaList = product.meta
 
 
@@ -208,6 +202,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 "product.images== ${imagesList}","IMAGES "
             )
 
+            // Setup Horizontal RecyclerView adapter for product image gallery
 
             val images = product.images
 
@@ -216,16 +211,13 @@ class ProductDetailsActivity : AppCompatActivity() {
 
             rvProductImages.adapter = ProductImageAdapter(images)
 
-            //Load Images
-
-//            Glide.with(tvImages.context)
-//                .load(product.images)
-//                .into(tvImages)
-
-
         }
 
     }
+    /**
+     * Configures quantity increment/decrement buttons and click listeners
+     * for adding items to the cart and triggering direct orders.
+     */
 
     fun setupQuantityAndCart() {
         btnDecrease.setOnClickListener {
@@ -234,12 +226,13 @@ class ProductDetailsActivity : AppCompatActivity() {
                 tvQuantity.text = quantity.toString()
             }
         }
-
+        // Increase product quantity
         btnIncrease.setOnClickListener {
             quantity++
             tvQuantity.text = quantity.toString()
         }
 
+        // Handle Add to Cart action using coroutines and Retrofit API
         btnAddToCart.setOnClickListener {
 
 
@@ -311,6 +304,8 @@ class ProductDetailsActivity : AppCompatActivity() {
             }
 
         }
+
+        // Handle Place Order button click event
         btnPlaceOrder.setOnClickListener {
             lifecycleScope.launch {
 
@@ -324,6 +319,9 @@ class ProductDetailsActivity : AppCompatActivity() {
 }
 
         }
+    /**
+     * Helper suspend function to execute order placement API call via Retrofit.
+     */
 
     private suspend fun placeOrder() {
 
