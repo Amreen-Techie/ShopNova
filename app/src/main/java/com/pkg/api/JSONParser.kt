@@ -7,9 +7,17 @@ import com.pkg.data.GetAllCartProductsInfo
 import com.pkg.data.ProductCategory
 import com.pkg.data.GetSearchData
 
+/**
+ * Utility class responsible for parsing raw JSON strings into specific data models using Gson.
+ */
+
 class JSONParser {
 
-
+    /**
+     * Parses the JSON response for adding an item to the cart.
+     * @param json Raw JSON response string.
+     * @return Mapped [AddCartProductInfo] object.
+     */
     fun parseAddCartResponse(json: String) : AddCartProductInfo
     {
         var gson = Gson()
@@ -26,6 +34,13 @@ class JSONParser {
 
         return addToCartResponse
     }
+
+    /**
+     * Parses the JSON response for fetching all items currently in carts.
+     * @param json Raw JSON response string.
+     * @return Mapped [GetAllCartProductsInfo] object.
+     */
+
     fun parseGetAllCartsResponse(json: String) : GetAllCartProductsInfo
     {
         var gson = Gson()
@@ -36,6 +51,11 @@ class JSONParser {
         )
         return response
     }
+    /**
+     * Parses the JSON response for product search queries.
+     * @param json Raw JSON response string.
+     * @return Mapped [GetSearchData] object containing search results.
+     */
     fun parseSearchProducts(json: String) : GetSearchData
     {
         var gson = Gson()
@@ -43,6 +63,12 @@ class JSONParser {
 
         return getSearchResponse
     }
+    /**
+     * Parses the JSON response for retrieving a list of product categories.
+     * Uses TypeToken to correctly handle generic List types with Gson.
+     * @param json Raw JSON response string.
+     * @return List of [ProductCategory] items.
+     */
 
     fun parseGetCategories(json: String) : List<ProductCategory>
     {
