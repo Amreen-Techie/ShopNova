@@ -27,11 +27,6 @@ class JSONParser {
 
         println("Product count: ${productList?.size}")
 
-       /* productList?.forEach { product ->
-            println("ID: ${product.productId}")
-            println("Title: ${product.title}")
-        }*/
-
         return addToCartResponse
     }
 

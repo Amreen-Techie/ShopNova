@@ -123,11 +123,7 @@ class LoginActivity : AppCompatActivity() {
                                     Toast.LENGTH_LONG
                                 ).show()
 //End
-                      /*          println("Access Token: $token")
-                                println("Username: $username")
-                                println("Email: $email")
-                                println("firstName: $firstName")
-                      */      }
+                           }
 
                         } else {
                             println("Error btnLoginClicked: ${login_response.code()}")

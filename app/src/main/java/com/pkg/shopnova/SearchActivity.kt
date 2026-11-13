@@ -106,9 +106,6 @@ class SearchActivity : AppCompatActivity() {
                             binding.rvSearch.adapter = searchAdapter
                         }
 
-
-                        //      searchList.addAll(getAllSearchResponse.products)
-
                         searchAdapter.notifyDataSetChanged()
 
                         Log.d("SearchActivity", "Products: ${searchList.size}")

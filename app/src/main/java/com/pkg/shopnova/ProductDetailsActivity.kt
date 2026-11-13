@@ -196,8 +196,6 @@ class ProductDetailsActivity : AppCompatActivity() {
 
            // tvImages.text = tags.joinToString(", ")
 
-
-
             Log.i(
                 "product.images== ${imagesList}","IMAGES "
             )
@@ -253,10 +251,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                         )
                     )
 
-                        println("CHECK 1: $requestAddtoCart")
-
                         val addtoCartResponse = AppRetroClient.getApiCart.addToCart(requestAddtoCart)
-                        println("CHECK 2: $addtoCartResponse")
 
                         if (addtoCartResponse.isSuccessful) {
 
@@ -266,11 +261,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
                                 val totalQuantity = data.totalQuantity
 
-                                /*Toast.makeText(
-                                    this@ProductDetailsActivity,
-                                    "totalQuantity: $totalQuantity",
-                                    Toast.LENGTH_LONG
-                                ).show()*/
+
                                 Toast.makeText(this@ProductDetailsActivity, "${quantity} Product Added to Cart!", Toast.LENGTH_SHORT).show()
 
                                 Log.i(
@@ -354,8 +345,5 @@ class ProductDetailsActivity : AppCompatActivity() {
         } else {
             println("Error placeOrder: ${placeOrderResponse.code()}")
         }
-
-
-
     }
 }

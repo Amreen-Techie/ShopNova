@@ -338,8 +338,5 @@ class CategoryRVActivity : AppCompatActivity()  {
             println("Error: ${e.message}")
         }
     }
-   /*  fun onCategoryClicked(position: Int, name: String) {
-        Log.i("CategoryRVActivity", "onNewsClicked called..Item is $name position is $position")
-    }*/
 
 }
